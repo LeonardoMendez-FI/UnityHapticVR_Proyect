@@ -1,0 +1,324 @@
+# Game Design Document (GDD)
+## Proyecto VR + Haptica
+
+## 1. Vision del proyecto
+Desarrollar una experiencia VR inmersiva en la que el jugador interactua principalmente con la mirada para gestionar energia en combate, exploracion y resolucion de objetivos.
+
+El juego se desarrolla en un laboratorio industrial automatizado fuera de control, con un enfoque en tension, lectura del entorno y toma de decisiones rapida.
+
+## 2. Premisa narrativa
+Un fallo en los sistemas de fabricacion autonoma provoca que drones de mantenimiento se comporten como unidades hostiles.
+
+Un cientifico atrapado activa una unidad robotica remota. El jugador, controlando esa unidad, debe restaurar sistemas clave del laboratorio y abrir una ruta de escape.
+
+## 3. Fantasia del jugador
+- Sentirse como una unidad de control de alta precision.
+- Resolver situaciones con mirada y gestion de energia, no solo con daño directo.
+- Recuperar zonas del laboratorio bajo presion constante.
+
+## 4. Objetivos del jugador
+- Desactivar modulos de fabricacion.
+- Reducir presencia de drones hostiles.
+- Reactivar sistemas del laboratorio para progresar.
+- Alcanzar la salida final del nivel.
+
+## 5. Pilares de diseño
+- Interacción por mirada como mecanica central.
+- Energía como recurso único para combate y entorno.
+- Legibilidad alta para evitar fatiga en VR.
+- Progresion clara por zonas cortas y objetivos concretos.
+
+## 6. Loop principal
+1. Explorar zona.
+2. Detectar amenazas y recursos.
+3. Usar gaze para drenar, transferir o sobrecargar energia.
+4. Desactivar modulo principal de la zona.
+5. Activar salida y avanzar a la siguiente area.
+
+## 7. Sistemas principales
+
+### 7.1 Sistema de energia por mirada
+Funciones principales:
+- Drenar energia de enemigos vulnerables.
+- Transferir energia a puertas, paneles y nodos.
+- Sobrecargar objetivos para inutilizarlos.
+- Reactivar unidades aliadas o sistemas de apoyo.
+
+Reglas base:
+- La energia se acumula de forma progresiva al mantener la mirada.
+- Los objetivos pueden conservar carga parcial.
+- La carga decae con el tiempo si se interrumpe la interaccion.
+
+### 7.2 Interacciones por tipo de objetivo
+- Enemigos: neutralizacion mediante sobrecarga o drenaje estrategico.
+- Sistemas: activacion por transferencia de energia.
+- Maquinas: desactivacion atacando puntos criticos.
+- Aliados: reactivacion para apoyo tactico o desbloqueo de rutas.
+
+### 7.3 Movimiento y confort VR
+- Desplazamiento basico adelante/atras.
+- Giro suave configurable.
+- Prioridad en estabilidad visual y reduccion de mareo.
+
+## 8. Enemigos
+
+### 8.1 Drone basico
+- Movimiento simple.
+- Ataque frontal directo.
+- Rol: presion constante de bajo riesgo.
+
+### 8.2 Drone rapido
+- Alta movilidad y cambios de direccion.
+- Baja resistencia.
+- Rol: forzar precision del gaze bajo estres.
+
+### 8.3 Drone elite
+- Alta resistencia y defensa de zonas clave.
+- Puede requerir secuencia de acciones para abrir ventana de dano.
+- Rol: mini-pico de dificultad por zona.
+
+## 9. Modulos de fabricacion
+- Generan enemigos de forma periodica.
+- Actuan como objetivo principal de cada zona.
+- Requieren desactivacion por fases (por ejemplo: exponer nucleo, sobrecargar, confirmar apagado).
+
+## 10. Diseno de nivel (MVP)
+- Un laboratorio dividido en zonas secuenciales.
+- Cada zona incluye:
+  - enemigos de presion
+  - sistemas interactivos
+  - un modulo principal
+- Al cerrar una zona, se habilita la siguiente.
+
+## 11. HUD y feedback
+- Reticula o indicador de foco para gaze.
+- Barra/estado de energia del jugador.
+- Indicadores simples de estado de objetivo (cargando, sobrecargando, bloqueado).
+- Feedback haptico basico en acciones clave.
+
+## 12. Alcance MVP
+- 1 nivel funcional completo.
+- Sistema de gaze integrado al flujo jugable.
+- 3 tipos de enemigos.
+- 1 tipo de modulo de fabricacion con fases.
+- UI/HUD funcional minima.
+- Feedback haptico basico.
+
+## 13. Criterios de exito del MVP
+- El jugador puede completar el nivel sin bloqueos.
+- La mecanica de mirada se entiende en menos de 5 minutos.
+- No hay caidas severas de rendimiento en flujo normal.
+- Los objetivos de cada zona son claros sin explicaciones extensas.
+
+## 14. Riesgos y mitigaciones
+- Riesgo: fatiga o incomodidad en VR.
+  - Mitigacion: sesiones cortas de prueba, ajuste de giro, simplificacion visual.
+- Riesgo: baja legibilidad del estado de energia.
+  - Mitigacion: UI de alto contraste y feedback auditivo/haptico.
+- Riesgo: repeticion temprana del loop.
+  - Mitigacion: variar combinaciones de enemigos y objetivos por zona.
+
+## 15. Roadmap sugerido
+
+### Fase 1: Base jugable
+- Movimiento VR.
+- Raycast de gaze.
+- Prototipo de interaccion basica.
+
+### Fase 2: Energia e interacciones
+- Sistema de energia completo.
+- Integracion con puertas, paneles y objetos.
+
+### Fase 3: Combate
+- Implementacion de enemigos.
+- IA basica por arquetipo.
+
+### Fase 4: Nivel MVP
+- Construccion del nivel.
+- Integracion de objetivos y progresion.
+
+### Fase 5: Pulido
+- Balance inicial.
+- Mejora de UI, audio y haptica.
+- Correccion de bugs criticos.
+
+## 16. Expansiones futuras
+- Nuevos tipos de enemigos y comportamientos cooperativos.
+- Habilidades secundarias de energia.
+- Nuevos modulos y objetivos dinamicos.
+- Multiples niveles o modos de desafio.
+
+## 17. Organizacion por equipos (recomendado)
+Para este proyecto conviene usar una estructura mixta:
+- Responsables por equipo (quien lidera cada area).
+- Plan por fases (cuando se ejecuta cada tarea y que depende de que).
+
+Esto evita que un equipo trabaje en tareas bloqueadas por otro.
+
+### 17.1 Equipo de Haptica
+- Crear sketch/base de comunicacion serial en Arduino IDE.
+- Ensamblar y soldar PCB para controles y chaleco.
+- Construir visor para Google Cardboard.
+- Integrar entradas/salidas serial en scripts de Unity.
+- Adaptar controles de teclado a controles personalizados.
+- Construir y ajustar el chaleco haptico.
+
+Dependencias clave:
+- Requiere contratos de eventos del gameplay (ataque, daño, carga de energia).
+- Requiere una version estable del sistema de energia para mapear patrones hapticos.
+
+### 17.2 Equipo de VR y Optimizacion
+- Buscar y seleccionar recursos (modelos, audio, materiales).
+- Configurar interaccion gaze.
+- Disenar menus e interfaces VR.
+- Ejecutar optimizacion de rendimiento y confort.
+- Apoyar en diseño de nivel y porgresión de zonas.
+
+Dependencias clave:
+- La deteccion gaze debe estar lista temprano para desbloquear gameplay central.
+- La optimizacion fuerte se hace sobre una build integrada, no sobre prototipos aislados.
+
+### 17.3 Equipo de Desarrollo
+- Implementar movimiento (vuelo y caminata) con control base.
+- Implementar IA de enemigos.
+- Implementar sistema de energia de jugador y enemigos.
+- Disenar e implementar HUD (incluyendo shaders si aplica).
+- Implementar diseño de nivel y progresion por zonas.
+
+Dependencias clave:
+- El sistema de energia depende de que gaze tenga API/eventos definidos.
+- La integracion haptica depende de eventos estables de combate y energia.
+
+## 18. Plan por fases con dependencias
+
+### Fase A - Fundaciones tecnicas
+Objetivo: desbloquear desarrollo paralelo.
+- VR: prototipo funcional de gaze (deteccion + foco + confirmacion).
+- Desarrollo: movimiento base y arquitectura de eventos.
+- Haptica: protocolo serial inicial y pruebas de comunicacion PC-microcontrolador.
+
+Entregables de salida:
+- API de gaze definida.
+- Contrato de eventos de gameplay documentado (ejemplo: OnAttack, OnDamage, OnEnergyChange).
+
+### Fase B - Gameplay core
+Objetivo: mecanica principal jugable de inicio a fin.
+- Desarrollo: sistema de energia + enemigos base + interacciones de zona.
+- VR: UI de soporte para energia/objetivos y mejora de usabilidad gaze.
+- Haptica: primer mapeo de feedback (impacto, carga, alerta).
+
+Dependencia principal:
+- Haptica inicia integracion completa cuando energia y ataque ya emiten eventos estables.
+
+### Fase C - Integracion de contenido
+Objetivo: convertir sistemas en experiencia completa.
+- Desarrollo: progresion de nivel, balance inicial, estados de victoria/derrota.
+- VR: integracion de recursos finales y ajuste de confort.
+- Haptica: calibracion de intensidad y validacion con gameplay real.
+
+### Fase D - Optimizacion y cierre MVP
+Objetivo: estabilidad y calidad de entrega.
+- VR/Optimizacion: rendimiento, reduccion de latencia y confort.
+- Desarrollo: correccion de bugs criticos y ajuste de dificultad.
+- Haptica: robustez de comunicacion serial y fallback seguro si falla dispositivo.
+
+## 19. Regla practica para evitar bloqueos
+- Ningun equipo espera a que otro termine "todo"; solo espera interfaces minimas estables.
+- Definir desde el inicio contratos claros:
+  - Eventos de gameplay (nombre, parametros, frecuencia).
+  - Formato de mensajes seriales (codigo, payload, checksum si aplica).
+  - Criterios de "listo para integrar" por feature.
+
+## 20. Plan de trabajo por semanas (1 mes)
+
+### Semana 1 - Base tecnica y contratos
+Objetivo: dejar listas las bases para que los 3 equipos trabajen en paralelo.
+
+Equipo VR y Optimizacion:
+- Implementar prototipo de deteccion gaze (raycast, foco, confirmacion).
+- Definir criterios de usabilidad minima del gaze.
+
+Equipo Desarrollo:
+- Implementar movimiento base (caminata/vuelo en modo debug de teclado).
+- Definir arquitectura de eventos del gameplay.
+
+Equipo Haptica:
+- Crear prototipo serial en Arduino IDE (handshake y envio/recepcion simple).
+- Iniciar ensamblaje de PCB/controlador y pruebas electricas basicas.
+
+Entregables de semana:
+- API de gaze estable (entrada/salida esperada).
+- Documento de eventos de gameplay (ataque, dano, energia).
+- Canal serial funcional Unity <-> microcontrolador (prueba basica).
+
+### Semana 2 - Gameplay core integrado
+Objetivo: tener el loop principal jugable de inicio a fin en version prototipo.
+
+Equipo VR y Optimizacion:
+- Integrar gaze al flujo de interaccion real.
+- Implementar UI basica para energia y estado de objetivo.
+
+Equipo Desarrollo:
+- Implementar sistema de energia (jugador + enemigos).
+- Implementar IA de enemigos basico y rapido.
+- Integrar interacciones de zona (puertas/paneles/modulo).
+
+Equipo Haptica:
+- Integrar lectura de eventos desde Unity (ataque, impacto, carga).
+- Definir primer mapa de patrones hapticos.
+
+Entregables de semana:
+- Prototipo jugable con gaze + energia + enemigos base.
+- Eventos estables para integracion haptica.
+- Primera respuesta haptica conectada a eventos del juego.
+
+### Semana 3 - Contenido, calibracion y balance
+Objetivo: transformar el prototipo en un MVP completo.
+
+Equipo VR y Optimizacion:
+- Integrar recursos finales prioritarios (modelos, audio, VFX esenciales).
+- Ajustar confort VR (giro, legibilidad, fatiga visual).
+
+Equipo Desarrollo:
+- Implementar enemigo elite.
+- Cerrar progresion del nivel completo (inicio -> objetivo -> salida).
+- Mejorar HUD/shaders y balance inicial de dificultad.
+
+Equipo Haptica:
+- Calibrar intensidades por tipo de evento.
+- Integrar chaleco/control y validar sesiones largas.
+
+Entregables de semana:
+- Nivel MVP completo y terminable.
+- Sistema haptico calibrado en eventos clave.
+- Primera pasada de balance jugable.
+
+### Semana 4 - Optimizacion, QA y entrega
+Objetivo: estabilidad, rendimiento y demostracion final.
+
+Equipo VR y Optimizacion:
+- Perfilado y optimizacion final (CPU/GPU/memoria).
+- Correcciones de confort y calidad visual minima aceptable.
+
+Equipo Desarrollo:
+- Corregir bugs criticos y medianos.
+- Ajuste final de energia, IA y flujo de nivel.
+
+Equipo Haptica:
+- Robustecer comunicacion serial (reintentos, desconexion segura).
+- Implementar fallback sin hardware para demo.
+
+Entregables de semana:
+- Build candidata a entrega.
+- Checklist de QA cerrado para bugs criticos.
+- Demo estable con y sin hardware haptico.
+
+## 22. Dependencias criticas entre semanas
+- Semana 1 -> Semana 2: sin API gaze y eventos definidos, Desarrollo y Haptica se bloquean.
+- Semana 2 -> Semana 3: sin energia/ataque estables, Haptica no puede calibrar correctamente.
+- Semana 3 -> Semana 4: sin nivel cerrado, optimizacion final y QA no son representativos.
+
+## 23. Control semanal sugerido
+- Lunes: plan de semana y desbloqueo de dependencias.
+- Miercoles: revision intermedia (ajustes de alcance).
+- Viernes: demo interna + retro + lista de bloqueos para la siguiente semana.
